@@ -1,3 +1,3 @@
 module SinatraCmd
-  autoload :Generator, 'spear/generator'
+  autoload :Generator, 'sinatra_cmd/generator'
 end
