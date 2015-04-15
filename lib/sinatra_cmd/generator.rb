@@ -10,16 +10,26 @@ module SinatraCmd
       File.join(File.dirname(__FILE__), "../../", "templates")
     end
 
-    def create_models_dir
+    def setup_helpers
+      keep_file "#{app_name}/helpers"
+      template "helpers/application.rb.erb", "#{app_name}/helpers/application.rb"
+      template "helpers/error_handling.rb.erb", "#{app_name}/helpers/error_handling.rb"
+    end
+
+    def setup_models
       keep_file "#{app_name}/models"
     end
 
-    def create_routes_dir
+    def setup_utils
+      keep_file "#{app_name}/utils"
+    end
+
+    def setup_routes
       keep_file "#{app_name}/routes"
       template "routes/demo.rb.erb", "#{app_name}/routes/demo.rb"
     end
 
-    def create_config
+    def setup_config
       template "config/database.yml.erb", "#{app_name}/config/database.yml"
       template "config/application.rb.erb", "#{app_name}/config/application.rb"
       template "config/boot.rb.erb", "#{app_name}/config/boot.rb"
@@ -27,7 +37,7 @@ module SinatraCmd
       copy_file "config/scheduler.rb", "#{app_name}/config/scheduler.rb"
     end
 
-    def create_appfile
+    def setup_appfile
       copy_file ".gitignore", "#{app_name}/.gitignore"
       copy_file "Gemfile", "#{app_name}/Gemfile"
       copy_file "Rakefile", "#{app_name}/Rakefile"
@@ -36,9 +46,9 @@ module SinatraCmd
     end
 
     def setup_rspec
-      keep_file "#{app_name}/sepc"
-      copy_file "sepc/spec_helper.rb", "#{app_name}/sepc/spec_helper.rb"
+      keep_file "#{app_name}/spec"
       copy_file ".rspec", "#{app_name}/.rspec"
+      copy_file "spec/spec_helper.rb", "#{app_name}/spec/spec_helper.rb"
     end
 
     def bundle_install
