@@ -4,25 +4,27 @@ module <%= app_name.capitalize %>
       def halt_with_400(message=nil)
         message ||= t.error_handling.bad_request
         logger.error("400, #{message}")
-        halt 400, json({code: 400, message: message})
+        halt 400, json({code: 400, error: message})
       end
 
       def halt_with_401(message=nil)
         message ||= t.error_handling.authorization_required
+        # realm = "Example"
+        # headers 'WWW-Authenticate' => %(Basic realm="#{realm}")
         logger.error("401, #{message}")
-        halt 401, json({code: 401, message: message})
+        halt 401, json({code: 401, error: message})
       end
 
       def halt_with_403(message=nil)
         message ||= t.error_handling.forbidden
         logger.error("403, #{message}")
-        halt 403, json({code: 403, message: message})
+        halt 403, json({code: 403, error: message})
       end
 
       def halt_with_404
         message = t.error_handling.not_found
         logger.error("404, #{message}")
-        halt 404, json({code: 404, message: message})
+        halt 404, json({code: 404, error: message})
       end
 
       # unprocessable_entity
@@ -42,13 +44,13 @@ module <%= app_name.capitalize %>
           errors << {resource: resource, field: attribute, code: code}
         end
         logger.error("422, Validation failed")
-        halt 422, json({code: 422, message: "Validation failed", errors: errors})
+        halt 422, json({code: 422, error: "Validation failed", errors: errors})
       end
 
       def halt_with_500
         message = "#{t.error_handling.internal_server_error}: #{env['sinatra.error'].message}"
         logger.error("500, #{message}")
-        halt 500, json({code: 500, message: message})
+        halt 500, json({code: 500, error: message})
       end
     end
 
