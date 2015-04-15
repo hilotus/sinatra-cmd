@@ -8,7 +8,7 @@ Dir[File.expand_path('../../routes/*.rb', __FILE__)].each { |f| require f }
 
 require File.expand_path('../scheduler', __FILE__)
 
-module <%= app_name %>
+module <%= app_name.capitalize %>
   class App
     # custome register
     register ErrorHandling
