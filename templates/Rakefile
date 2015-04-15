@@ -1,0 +1,9 @@
+require 'rake'
+include Rake::DSL
+
+require './config/environment'
+require 'ci/reporter/rake/rspec'
+
+task :spec => 'ci:setup:rspec'
+
+Dir.glob('lib/tasks/*.rake').each { |r| load r}

@@ -1,0 +1,14 @@
+# encoding: utf-8
+
+module <%= app_name %>
+  class App
+    sinatra_namespace <%= app_name %>::API_V1 do
+      get '/demo' do
+        unless params[:error].nil?
+          raise 'There are some errors.'
+        end
+        json success: true
+      end
+    end
+  end
+end

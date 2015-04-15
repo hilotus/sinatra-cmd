@@ -1,0 +1,9 @@
+error_handling:
+  bad_request: "Bad request"
+  authorization_required: "Authorization required"
+  forbidden: "Forbidden"
+  not_found: "Not found"
+  internal_server_error: "Internal server error"
+
+  multi_json:
+    decode: "Problems parsing JSON"

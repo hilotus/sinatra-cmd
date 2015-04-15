@@ -1,0 +1,15 @@
+module <%= app_name %>
+  module ApplicationHelper
+    def logger
+      return @logger unless @logger.nil?
+
+      @logger = Logger.new(File.join(File.expand_path('../../log', __FILE__), "#{ENV['RACK_ENV']}.log"), 'daily')
+      @logger.level = Logger::INFO
+      @logger.datetime_format = "%Y-%m-%d %H:%M:%S"
+      @logger.formatter = proc {|severity, datetime, default_field , msg|
+        "#{severity[0..0]}, #{datetime}, #{severity} -- #{msg}\n"
+      }
+      @logger
+    end
+  end
+end

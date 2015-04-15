@@ -1,0 +1,67 @@
+module <%= app_name %>
+  module ErrorHandling
+    module Helpers
+      def halt_with_400(message=nil)
+        message ||= t.error_handling.bad_request
+        logger.error("400, #{message}")
+        halt 400, json({code: 400, message: message})
+      end
+
+      def halt_with_401(message=nil)
+        message ||= t.error_handling.authorization_required
+        logger.error("401, #{message}")
+        halt 401, json({code: 401, message: message})
+      end
+
+      def halt_with_403(message=nil)
+        message ||= t.error_handling.forbidden
+        logger.error("403, #{message}")
+        halt 403, json({code: 403, message: message})
+      end
+
+      def halt_with_404
+        message = t.error_handling.not_found
+        logger.error("404, #{message}")
+        halt 404, json({code: 404, message: message})
+      end
+
+      # unprocessable_entity
+      def halt_with_422
+        errors = []
+        resource = env['sinatra.error'].record.class.to_s
+        env['sinatra.error'].record.errors.each do |attribute, message|
+          code = case message
+          when "can't be blank"
+            "missing_field"
+          when "has already been taken"
+            "already_exists"
+          else
+            "invalid"
+          end
+
+          errors << {resource: resource, field: attribute, code: code}
+        end
+        logger.error("422, Validation failed")
+        halt 422, json({code: 422, message: "Validation failed", errors: errors})
+      end
+
+      def halt_with_500
+        message = "#{t.error_handling.internal_server_error}: #{env['sinatra.error'].message}"
+        logger.error("500, #{message}")
+        halt 500, json({code: 500, message: message})
+      end
+    end
+
+    def self.registered(app)
+      app.helpers ErrorHandling::Helpers
+
+      app.error MultiJson::DecodeError do
+        halt_with_400(t.error_handling.multi_json.decode)
+      end
+
+      app.error 500 do
+        halt_with_500
+      end
+    end
+  end
+end

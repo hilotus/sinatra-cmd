@@ -1,0 +1,33 @@
+require 'bundler'
+require 'bundler/setup'
+
+Bundler.require
+require 'pry' if development? or test?
+
+require 'sinatra/reloader' if development?
+require 'sinatra/namespace'
+require 'sinatra/json'
+
+# sinatra and rake namespace global method conflict.
+module Sinatra::Namespace::SharedMethods
+  alias :sinatra_namespace :namespace
+  remove_method :namespace
+end
+
+module <%= app_name %>
+  API_V1 = '/App/1'
+
+  class App < Sinatra::Application
+    register Sinatra::Namespace
+    helpers Sinatra::JSON
+
+    configure do
+      # Mongoid config file load
+      Mongoid.load!(File.expand_path('../database.yml', __FILE__))
+
+      # Error blocks don't trigger in development mode.
+      # https://github.com/sinatra/sinatra/issues/578
+      set :show_exceptions, :after_handler
+    end
+  end
+end

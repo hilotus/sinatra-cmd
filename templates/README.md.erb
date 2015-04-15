@@ -1,0 +1,15 @@
+<%= app_name %>
+====================
+
+##How to use pry
+create .pryrc file in `/Users/username` folder.
+```shell
+#!/usr/bin/ruby
+
+if defined?(PryByebug)
+  Pry.commands.alias_command 'c', 'continue'
+  Pry.commands.alias_command 's', 'step'
+  Pry.commands.alias_command 'n', 'next'
+  Pry.commands.alias_command 'f', 'finish'
+end
+```
