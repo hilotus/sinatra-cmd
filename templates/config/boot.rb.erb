@@ -17,9 +17,11 @@ end
 module <%= app_name.capitalize %>
   API_V1 = '/1'
 
-  class App < Sinatra::Application
+  class App < Sinatra::Base
     register Sinatra::Namespace
     helpers Sinatra::JSON
+    # language automatic changed by params['locale']
+    register Sinatra::R18n
 
     configure do
       # Mongoid config file load

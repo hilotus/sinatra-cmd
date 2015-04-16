@@ -10,23 +10,23 @@ module SinatraCmd
       File.join(File.dirname(__FILE__), "../../", "templates")
     end
 
+    def setup_utils
+      keep_file "#{app_name}/app/utils"
+    end
+
     def setup_helpers
-      keep_file "#{app_name}/helpers"
-      template "helpers/application.rb.erb", "#{app_name}/helpers/application.rb"
-      template "helpers/error_handling.rb.erb", "#{app_name}/helpers/error_handling.rb"
+      keep_file "#{app_name}/app/helpers"
+      template "app/helpers/application.rb.erb", "#{app_name}/app/helpers/application.rb"
+      template "app/helpers/error_handling.rb.erb", "#{app_name}/app/helpers/error_handling.rb"
     end
 
     def setup_models
-      keep_file "#{app_name}/models"
-    end
-
-    def setup_utils
-      keep_file "#{app_name}/utils"
+      keep_file "#{app_name}/app/models"
     end
 
     def setup_routes
-      keep_file "#{app_name}/routes"
-      template "routes/demo.rb.erb", "#{app_name}/routes/demo.rb"
+      keep_file "#{app_name}/app/routes"
+      template "app/routes/demo.rb.erb", "#{app_name}/app/routes/demo.rb"
     end
 
     def setup_config

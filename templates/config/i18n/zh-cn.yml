@@ -4,6 +4,5 @@ error_handling:
   forbidden: "Forbidden"
   not_found: "Not found"
   internal_server_error: "Internal server error"
-
   multi_json:
     decode: "Problems parsing JSON"
