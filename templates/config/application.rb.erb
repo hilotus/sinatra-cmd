@@ -3,7 +3,7 @@
 require File.expand_path('../boot', __FILE__)
 
 %w(utils helpers models routes).each do |folder|
-  Dir[File.expand_path("../../app/#{folder}/**/*.rb", __FILE__)].each {|file| require file}
+  Dir[File.expand_path("../../#{folder}/**/*.rb", __FILE__)].each {|file| require file}
 end
 
 require File.expand_path('../scheduler', __FILE__)
