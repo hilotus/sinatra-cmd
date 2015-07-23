@@ -2,19 +2,5 @@ require 'fileutils'
 
 module <%= app_name.split(/\-|\_/).map(&:capitalize).join('') %>
   module ApplicationHelper
-    def logger
-      return @logger unless @logger.nil?
-
-      file_path = File.join(File.expand_path('../../log', __FILE__))
-      FileUtils.mkdir_p(file_path)
-
-      @logger = Logger.new(File.join(file_path, "#{ENV['RACK_ENV']}.log"), 'daily')
-      @logger.level = Logger::INFO
-      @logger.datetime_format = "%Y-%m-%d %H:%M:%S"
-      @logger.formatter = proc {|severity, datetime, default_field , msg|
-        "#{severity[0..0]}, #{datetime}, #{severity} -- #{msg}\n"
-      }
-      @logger
-    end
   end
 end

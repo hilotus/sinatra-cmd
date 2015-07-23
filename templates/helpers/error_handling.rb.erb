@@ -48,9 +48,9 @@ module <%= app_name.split(/\-|\_/).map(&:capitalize).join('') %>
       end
 
       def halt_with_500
-        message = "#{t.error_handling.internal_server_error}: #{env['sinatra.error'].message}"
-        logger.error("500, #{message}")
-        halt 500, json({code: 500, error: message})
+        err = env['sinatra.error']
+        logger.error("500, #{err.message} \n #{err.backtrace.join("\n")}")
+        halt 500, json({code: 500, error: "#{t.error_handling.internal_server_error}: #{err.message}"})
       end
     end
 

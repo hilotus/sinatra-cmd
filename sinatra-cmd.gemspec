@@ -6,8 +6,8 @@ require 'sinatra_cmd/version'
 Gem::Specification.new do |spec|
   spec.name          = "sinatra-cmd"
   spec.version       = SinatraCmd::VERSION
-  spec.authors       = ["CBluowei"]
-  spec.email         = ["wei.luo@careerbuilder.com"]
+  spec.authors       = ["wluo"]
+  spec.email         = ["luowei---010101@163.com"]
 
   spec.summary       = %q{Command for generating sinatra project}
   spec.description   = %q{Generate a sinatra project.}
@@ -24,4 +24,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.9"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "thor", "~> 0.19"
+
+  spec.add_development_dependency "rspec", "~> 3.2"
+  spec.add_development_dependency "pry", "~> 0.10"
+  spec.add_development_dependency "pry-stack_explorer", "~> 0.4"
+  spec.add_development_dependency "pry-byebug", "~> 3.0"
 end

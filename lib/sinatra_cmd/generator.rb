@@ -30,6 +30,7 @@ module SinatraCmd
     end
 
     def setup_config
+      template "config/mongo_mapper.yml.erb", "#{app_name}/config/mongo_mapper.yml"
       template "config/application.rb.erb", "#{app_name}/config/application.rb"
       template "config/boot.rb.erb", "#{app_name}/config/boot.rb"
       copy_file "config/environment.rb", "#{app_name}/config/environment.rb"

@@ -4,28 +4,54 @@ require 'bundler/setup'
 Bundler.require
 require 'pry' if development? or test?
 
-require 'sinatra/reloader' if development?
+require 'sinatra/reloader'
 require 'sinatra/namespace'
 require 'sinatra/json'
+require 'sinatra/custom_logger'
+
+require 'fileutils'
 
 module <%= app_name.split(/\-|\_/).map(&:capitalize).join('') %>
   API_VERSION = '1'
 
   class App < Sinatra::Base
-    register Sinatra::Namespace
     helpers Sinatra::JSON
+    helpers Sinatra::CustomLogger
+
+    register Sinatra::Namespace
+
     # language automatic changed by params['locale']
     register Sinatra::R18n
 
-    set :logging, true
+    configure :development do
+      register Sinatra::Reloader
+    end
 
     configure do
-      # Mongoid config file load
-      # Mongoid.load!(File.expand_path('../database.yml', __FILE__))
+      # db_file = File.join(File.expand_path('../mongo_mapper.yml', __FILE__))
+
+      # Mongoid load config file
+      # Mongoid.load!(File.expand_path('../mongoid.yml', __FILE__))
+
+      # MongoMapper setup condig file
+      # mongo_config = YAML::load(ERB.new(File.read(db_file)).result)
+      # MongoMapper.setup(mongo_config, ENV['RACK_ENV'])
+
+      # R18n::I18n.default = 'en-us'
 
       # Error blocks don't trigger in development mode.
       # https://github.com/sinatra/sinatra/issues/578
       set :show_exceptions, :after_handler
+    end
+
+    configure :development, :production do
+      file_path = File.join(File.expand_path('../../log', __FILE__))
+      FileUtils.mkdir_p(file_path)
+
+      # RACK_ENV default to development
+      logger = Logger.new(File.join(file_path, "#{ENV['RACK_ENV']}.log"), 'daily')
+      logger.level = Logger::DEBUG if development?
+      set :logger, logger
     end
   end
 end
