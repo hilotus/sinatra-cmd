@@ -25,8 +25,10 @@ module <%= app_name.split(/\-|\_/).map(&:capitalize).join('') %>
 
     configure :development do
       register Sinatra::Reloader
+      also_reload File.join(File.expand_path('../lib/**/*.rb', __FILE__))
     end
 
+    # Mongo Settings
     configure do
       # db_file = File.join(File.expand_path('../mongo_mapper.yml', __FILE__))
 
@@ -37,11 +39,40 @@ module <%= app_name.split(/\-|\_/).map(&:capitalize).join('') %>
       # mongo_config = YAML::load(ERB.new(File.read(db_file)).result)
       # MongoMapper.setup(mongo_config, ENV['RACK_ENV'])
 
-      # R18n::I18n.default = 'en-us'
-
       # Error blocks don't trigger in development mode.
       # https://github.com/sinatra/sinatra/issues/578
       set :show_exceptions, :after_handler
+    end
+
+    # R18n settings
+    configure do
+      # Filter to use Rails named variables:
+      #
+      #   name: "My name is %{name}"
+      #   i18n.name(name: 'Ivan') #=> "My name is Ivan"
+      R18n::Filters.add(String, :named_variables) do |content, config, params|
+        if params.is_a? Hash
+          content = content.clone
+          params.each_pair do |name, value|
+            value = config[:locale].localize(value)
+            if defined? ActiveSupport::SafeBuffer
+              value = ActiveSupport::SafeBuffer.new + value
+            end
+            content.gsub! "%{#{name}}",  value
+            content.gsub! "{{#{name}}}", value
+          end
+        end
+        content
+      end
+      R18n::Filters.on(:named_variables)
+      R18n::I18n.default = 'en-us'
+    end
+
+    # Important
+    before do
+      # We have to set default locale into session,
+      # because of the sinatra-r18n source code doesn't check R18n::I18n.default
+      session[:locale] = R18n::I18n.default
     end
 
     configure :development, :production do
@@ -50,6 +81,7 @@ module <%= app_name.split(/\-|\_/).map(&:capitalize).join('') %>
 
       # RACK_ENV default to development
       logger = Logger.new(File.join(file_path, "#{ENV['RACK_ENV']}.log"), 'daily')
+      logger.datetime_format = "%Y-%m-%d %H:%M:%S.%L %z"
       logger.level = Logger::DEBUG if development?
       set :logger, logger
     end

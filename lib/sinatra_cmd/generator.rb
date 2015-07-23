@@ -10,8 +10,8 @@ module SinatraCmd
       File.join(File.dirname(__FILE__), "../../", "templates")
     end
 
-    def setup_utils
-      keep_file "#{app_name}/utils"
+    def setup_lib
+      keep_file "#{app_name}/lib"
     end
 
     def setup_helpers
