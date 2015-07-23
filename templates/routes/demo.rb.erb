@@ -2,7 +2,7 @@
 
 module <%= app_name.capitalize %>
   class App
-    sinatra_namespace <%= app_name.capitalize %>::API_V1 do
+    namespace "/#{<%= app_name.capitalize %>::API_VERSION}" do
       get '/demo' do
         unless params[:error].nil?
           raise 'There are some errors.'

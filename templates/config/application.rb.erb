@@ -6,8 +6,6 @@ require File.expand_path('../boot', __FILE__)
   Dir[File.expand_path("../../#{folder}/**/*.rb", __FILE__)].each {|file| require file}
 end
 
-require File.expand_path('../scheduler', __FILE__)
-
 module <%= app_name.capitalize %>
   class App
     # custome register

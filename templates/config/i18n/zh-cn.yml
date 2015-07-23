@@ -1,8 +1,8 @@
 error_handling:
-  bad_request: "Bad request"
-  authorization_required: "Authorization required"
-  forbidden: "Forbidden"
-  not_found: "Not found"
-  internal_server_error: "Internal server error"
+  bad_request: "错误请求"
+  authorization_required: "需要进行验证"
+  forbidden: "被禁止"
+  not_found: "未找到"
+  internal_server_error: "服务器内部错误"
   multi_json:
-    decode: "Problems parsing JSON"
+    decode: "解析JSON出错"

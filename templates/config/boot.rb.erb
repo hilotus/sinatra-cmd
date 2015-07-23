@@ -8,14 +8,8 @@ require 'sinatra/reloader' if development?
 require 'sinatra/namespace'
 require 'sinatra/json'
 
-# sinatra and rake namespace global method conflict.
-module Sinatra::Namespace::SharedMethods
-  alias :sinatra_namespace :namespace
-  remove_method :namespace
-end
-
 module <%= app_name.capitalize %>
-  API_V1 = '/1'
+  API_VERSION = '1'
 
   class App < Sinatra::Base
     register Sinatra::Namespace
@@ -23,9 +17,11 @@ module <%= app_name.capitalize %>
     # language automatic changed by params['locale']
     register Sinatra::R18n
 
+    set :logging, true
+
     configure do
       # Mongoid config file load
-      Mongoid.load!(File.expand_path('../database.yml', __FILE__))
+      # Mongoid.load!(File.expand_path('../database.yml', __FILE__))
 
       # Error blocks don't trigger in development mode.
       # https://github.com/sinatra/sinatra/issues/578

@@ -30,11 +30,9 @@ module SinatraCmd
     end
 
     def setup_config
-      template "config/database.yml.erb", "#{app_name}/config/database.yml"
       template "config/application.rb.erb", "#{app_name}/config/application.rb"
       template "config/boot.rb.erb", "#{app_name}/config/boot.rb"
       copy_file "config/environment.rb", "#{app_name}/config/environment.rb"
-      copy_file "config/scheduler.rb", "#{app_name}/config/scheduler.rb"
 
       # i18n
       copy_file "config/i18n/en-us.yml", "#{app_name}/config/i18n/en-us.yml"
