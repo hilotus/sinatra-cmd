@@ -1,4 +1,4 @@
-module <%= app_name.capitalize %>
+module <%= app_name.split(/\-|\_/).map(&:capitalize).join('') %>
   module ErrorHandling
     module Helpers
       def halt_with_400(message=nil)

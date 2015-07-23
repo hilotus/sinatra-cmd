@@ -8,7 +8,7 @@ require 'sinatra/reloader' if development?
 require 'sinatra/namespace'
 require 'sinatra/json'
 
-module <%= app_name.capitalize %>
+module <%= app_name.split(/\-|\_/).map(&:capitalize).join('') %>
   API_VERSION = '1'
 
   class App < Sinatra::Base

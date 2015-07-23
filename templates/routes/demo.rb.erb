@@ -1,8 +1,8 @@
 # encoding: utf-8
 
-module <%= app_name.capitalize %>
+module <%= app_name.split(/\-|\_/).map(&:capitalize).join('') %>
   class App
-    namespace "/#{<%= app_name.capitalize %>::API_VERSION}" do
+    namespace "/#{<%= app_name.split(/\-|\_/).map(&:capitalize).join('') %>::API_VERSION}" do
       get '/demo' do
         unless params[:error].nil?
           raise 'There are some errors.'

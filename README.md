@@ -18,11 +18,18 @@ Or install it yourself as:
 
 ## Usage
 
-    sinatra app_name
+```ruby
+# app_name format could be:
+#   1. aaa_bbb_ccc
+#   2. aaa-bbb-ccc
+#   3. aaa
 
-##How to use pry
+sinatra {app_name}
+```
 
-create .pryrc file in `/Users/username` folder.
+##How to use pry (option, latest version is unnecessary)
+
+create .pryrc file in `/Users/username` or `/home/username` folder.
 
 ```shell
 #!/usr/bin/ruby

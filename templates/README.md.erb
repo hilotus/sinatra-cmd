@@ -1,2 +1,2 @@
-<%= app_name.capitalize %>
+<%= app_name.split(/\-|\_/).map(&:capitalize).join('') %>
 ====================

@@ -1,6 +1,6 @@
 require 'fileutils'
 
-module <%= app_name.capitalize %>
+module <%= app_name.split(/\-|\_/).map(&:capitalize).join('') %>
   module ApplicationHelper
     def logger
       return @logger unless @logger.nil?
