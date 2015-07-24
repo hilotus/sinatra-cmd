@@ -40,18 +40,18 @@ module SinatraCmd
       copy_file "config/i18n/zh-cn.yml", "#{app_name}/config/i18n/zh-cn.yml"
     end
 
+    def setup_rspec
+      keep_file "#{app_name}/spec"
+      copy_file ".rspec", "#{app_name}/.rspec"
+      copy_file "spec/spec_helper.rb", "#{app_name}/spec/spec_helper.rb"
+    end
+
     def setup_appfile
       copy_file ".gitignore", "#{app_name}/.gitignore"
       copy_file "Gemfile", "#{app_name}/Gemfile"
       copy_file "Rakefile", "#{app_name}/Rakefile"
       template "config.ru.erb", "#{app_name}/config.ru"
       template "README.md.erb", "#{app_name}/README.md"
-    end
-
-    def setup_rspec
-      keep_file "#{app_name}/spec"
-      copy_file ".rspec", "#{app_name}/.rspec"
-      copy_file "spec/spec_helper.rb", "#{app_name}/spec/spec_helper.rb"
     end
 
     def bundle_install
@@ -61,7 +61,7 @@ module SinatraCmd
     protected
 
       def keep_file(destination)
-        create_file "#{destination}/.keep"
+        create_file "#{destination}/.gtkeep"
       end
   end
 end

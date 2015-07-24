@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{Command for generating sinatra project}
   spec.description   = %q{Generate a sinatra project.}
-  spec.homepage      = "https://github.com/hilotus/sinatra-cli"
+  spec.homepage      = "https://github.com/hilotus/sinatra-cmd"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
