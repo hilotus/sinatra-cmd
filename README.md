@@ -2,11 +2,7 @@
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'sinatra-cmd'
-```
+Add `gem 'sinatra-cmd'` to your application's Gemfile:
 
 And then execute:
 
@@ -26,6 +22,11 @@ Or install it yourself as:
 
 sinatra {app_name}
 ```
+> Supported options:
+
+  1. --skip_bundle_install
+  2. continue...
+
 
 ##How to use pry (option, latest version is unnecessary)
 

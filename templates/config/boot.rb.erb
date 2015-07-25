@@ -10,6 +10,7 @@ require 'sinatra/json'
 require 'sinatra/custom_logger'
 
 require 'fileutils'
+require 'logger'
 
 module <%= app_name.split(/\-|\_/).map(&:capitalize).join('') %>
   API_VERSION = '1'
@@ -68,11 +69,14 @@ module <%= app_name.split(/\-|\_/).map(&:capitalize).join('') %>
       R18n::I18n.default = 'en-us'
     end
 
-    # Important
+    ##### Important
     before do
       # We have to set default locale into session,
       # because of the sinatra-r18n source code doesn't check R18n::I18n.default
       session[:locale] = R18n::I18n.default
+
+      # TODO: In sinatra-r18n-2.0.4, if params[:locale] will return true....
+      params[:locale] = nil if params[:locale] == ""
     end
 
     configure :development, :production do

@@ -5,6 +5,7 @@ module SinatraCmd
     include Thor::Actions
 
     argument :app_name
+    class_option :skip_bundle_install, :type => :boolean
 
     def self.source_root
       File.join(File.dirname(__FILE__), "../../", "templates")
@@ -15,7 +16,7 @@ module SinatraCmd
     end
 
     def setup_helpers
-      keep_file "#{app_name}/helpers"
+      empty_directory "#{app_name}/helpers"
       template "helpers/application.rb.erb", "#{app_name}/helpers/application.rb"
       template "helpers/error_handling.rb.erb", "#{app_name}/helpers/error_handling.rb"
     end
@@ -25,7 +26,7 @@ module SinatraCmd
     end
 
     def setup_routes
-      keep_file "#{app_name}/routes"
+      empty_directory "#{app_name}/routes"
       template "routes/demo.rb.erb", "#{app_name}/routes/demo.rb"
     end
 
@@ -41,7 +42,7 @@ module SinatraCmd
     end
 
     def setup_rspec
-      keep_file "#{app_name}/spec"
+      empty_directory "#{app_name}/spec"
       copy_file ".rspec", "#{app_name}/.rspec"
       copy_file "spec/spec_helper.rb", "#{app_name}/spec/spec_helper.rb"
     end
@@ -55,7 +56,9 @@ module SinatraCmd
     end
 
     def bundle_install
-      system "cd #{app_name} && bundle install && cd ../"
+      unless options[:skip_bundle_install]
+        system "cd #{app_name} && bundle install && cd ../"
+      end
     end
 
     protected
